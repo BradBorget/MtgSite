@@ -1,0 +1,41 @@
+<style>
+  .d-flex {
+      display: flex;
+      align-items: center;
+    }
+  .container {
+    width: 300px;
+    font: 17px Calibri;
+  }
+</style>
+
+
+  
+<nav class="navbar navbar-default">
+  <ul class="nav navbar-nav">
+    <li><a routerLink="/" style="margin-top: 20px;" (click)="setCard('')">Home</a></li>
+    <li><a routerLink="/cardlookup" style="margin-top: 20px;" (click)="setCard('')">Card Lookup</a></li>
+    <li><a routerLink="/shoppingcart" style="margin-top: 20px;" (click)="setCard('')">Shopping Cart</a></li>
+  </ul>
+  <form class="navbar-form navbar-left">
+      <mat-form-field class="container">
+        <input type="text" aria-label="Number"
+            matInput 
+            [formControl]="searchTerm" 
+            [matAutocomplete]="auto"
+            (keyup.enter)="navSetCard(searchTerm.value);searchTerm.setValue('');">
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let card of myCards" [value]="card.name" (click)="setCard(card.name);searchTerm.setValue('');" routerLink="/cardlookup">
+            {{ card.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <button type="button" class="btn btn-info" (click)="setCard(searchTerm.value);searchTerm.setValue('');" routerLink="/cardlookup">
+          <span class="glyphicon glyphicon-search"></span> Search
+      </button>
+  </form>
+</nav>
+
+<div class="outletclass">
+  <router-outlet></router-outlet>
+</div>

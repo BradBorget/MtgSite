@@ -1,0 +1,91 @@
+<div class="row" *ngIf="list.length != 0; else NoItems">
+  <div class="col-md-11">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Rarity</th>
+          <th>Condition</th>
+          <th>Stock</th>
+          <th>Price</th>
+          <th>Amount</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of list">
+          <td><a href="{{x.link}}">{{x.name}}</a></td>
+          <td>{{x.type}}</td>
+          <td>{{x.Rarity}}</td>
+          <td>Mint</td>
+          <td>{{x.stock_M}}</td>
+          <td>{{x.price_M}}</td>
+          <td><div class="input-group">
+              <span class="input-group-btn">
+                <!--data-type="minus" data-field="quant[2]" data-type="plus" data-field="quant[2]"-->
+                  <div *ngIf="x.newamount > 0; else NNM">
+                    <button type="button" class="btn btn-danger btn-number" (click)="x.newamount = x.newamount - 1; UpdateShoppingCart(x.id);">
+                      <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                  </div>
+                  <ng-template #NNM>
+                      <button type="button" class="btn btn-danger btn-number" disabled>
+                          <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                  </ng-template>
+              </span>
+              <input type="number" class="form-control input-number" [(ngModel)]="x.newamount" (keyup.enter)="UpdateShoppingCart(x.id);" (blur)="UpdateShoppingCart(x.id);">
+              <span class="input-group-btn">
+                <div *ngIf="x.newamount < x.stock_M; else NNP">
+                  <button type="button" class="btn btn-success btn-number" (click)="x.newamount = x.newamount + 1; UpdateShoppingCart(x.id);">
+                      <span class="glyphicon glyphicon-plus"></span>
+                  </button>
+                </div>
+                <ng-template #NNP>
+                    <button type="button" class="btn btn-success btn-number" disabled>
+                      <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </ng-template>
+              </span>
+          </div></td>
+          <td><button type="button" class="btn btn-danger btn-number" (click)="DeleteItem(x.id);">
+              Delete
+          </button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-1">
+    <ul class="list-group">
+      <li class="list-group-item">
+        <h2>Total: ${{Total}}</h2>
+      </li>
+      <li class="list-group-item"><button type="button" class="btn btn-info btn-number" data-toggle="modal" data-target="#exampleModal">
+          Submit
+      </button>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Checkout</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to buy these items?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div></li>
+    </ul>
+  </div>
+</div>
+<ng-template #NoItems>
+  <h2>You haven't gotten any items yet!</h2>
+</ng-template>

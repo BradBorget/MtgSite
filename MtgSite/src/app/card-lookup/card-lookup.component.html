@@ -1,0 +1,63 @@
+<body>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Rarity</th>
+      <th>Condition</th>
+      <th>Stock</th>
+      <th>Price</th>
+      <th>Amount</th>
+      <th>Purchase</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let x of list | paginate: { itemsPerPage: 20, currentPage: p }">
+      <td><a href="{{x.link}}" target="_blank">{{x.name}}</a></td>
+      <td>{{x.type}}</td>
+      <td>{{x.Rarity}}</td>
+      <td>Mint</td>
+      <td>{{x.stock_M}}</td>
+      <td>{{x.price_M}}</td>
+      <td>
+        <div *ngIf="x.stock_M != 0">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <!--data-type="minus" data-field="quant[2]" data-type="plus" data-field="quant[2]"-->
+              <div *ngIf="x.newamount > 0; else NN">
+                <button type="button" class="btn btn-danger btn-number" (click)="x.newamount = x.newamount - 1">
+                  <span class="glyphicon glyphicon-minus"></span>
+                </button>
+              </div>
+              <ng-template #NN>
+                  <button type="button" class="btn btn-danger btn-number" disabled>
+                      <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+              </ng-template>
+          </span>
+          <input type="number" class="form-control input-number" [(ngModel)]="x.newamount">
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-success btn-number" (click)="x.newamount = x.newamount + 1">
+                  <span class="glyphicon glyphicon-plus"></span>
+              </button>
+          </span>
+      </div></div></td>
+      <td>
+        <div *ngIf="x.stock_M != 0; else OOS">
+          <div *ngIf="x.stock_M >= x.newamount && x.newamount >= 0; else NES">
+            <button type="button" class="btn btn-info" (click)="UpdateShoppingCart(x.id);">Purchase</button>
+          </div>
+          <ng-template #NES>
+            <button type="button" class="btn btn-info" disabled>No Stock</button>
+          </ng-template>
+        </div>
+        <ng-template #OOS>
+            <button type="button" class="btn btn-info" disabled>Out of Stock</button>
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
+</body>
