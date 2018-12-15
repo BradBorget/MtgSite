@@ -51,8 +51,9 @@ export class CardLookupComponent implements OnInit {
 
   ngOnInit() {
     this.service.CardListItems.subscribe(list => this.list = list);
+    this.service.ShoppingCartItems.subscribe(cart => this.cart = cart);
     this.list.forEach(item => {
-      item.newamount = 0;
+      item.newamount = 1;
     });
     
   }

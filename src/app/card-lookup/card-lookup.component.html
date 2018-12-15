@@ -36,7 +36,7 @@
                     </button>
               </ng-template>
           </span>
-          <input type="number" class="form-control input-number" [(ngModel)]="x.newamount">
+          <input type="number" class="form-control input-number" [(ngModel)]="x.newamount" value=1>
           <span class="input-group-btn">
               <button type="button" class="btn btn-success btn-number" (click)="x.newamount = x.newamount + 1">
                   <span class="glyphicon glyphicon-plus"></span>
@@ -46,7 +46,7 @@
       <td>
         <div *ngIf="x.stock_M != 0; else OOS">
           <div *ngIf="x.stock_M >= x.newamount && x.newamount >= 0; else NES">
-            <button type="button" class="btn btn-info" (click)="UpdateShoppingCart(x.id);">Purchase</button>
+            <button type="button" class="btn btn-info" (click)="UpdateShoppingCart(x.id);">Add to Cart</button>
           </div>
           <ng-template #NES>
             <button type="button" class="btn btn-info" disabled>No Stock</button>

@@ -23,14 +23,14 @@
             matInput 
             [formControl]="searchTerm" 
             [matAutocomplete]="auto"
-            (keyup.enter)="navSetCard(searchTerm.value);searchTerm.setValue('');">
+            (keyup.enter)="navSetCard(searchTerm.value);">
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let card of myCards" [value]="card.name" (click)="setCard(card.name);searchTerm.setValue('');" routerLink="/cardlookup">
+          <mat-option *ngFor="let card of myCards" [value]="card.name" (click)="setCard(card.name);" routerLink="/cardlookup">
             {{ card.name }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <button type="button" class="btn btn-info" (click)="setCard(searchTerm.value);searchTerm.setValue('');" routerLink="/cardlookup">
+      <button type="button" class="btn btn-info" (click)="setCard(searchTerm.value);" routerLink="/cardlookup">
           <span class="glyphicon glyphicon-search"></span> Search
       </button>
   </form>
